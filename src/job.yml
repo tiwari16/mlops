@@ -1,15 +1,25 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
-code: model
+
+# Upload current folder (src/) that contains train.py
+code: .
+
+# Run the training script with arguments
 command: >-
-  python 
-  --
-  --
+  python train.py
+  --training_data ${{inputs.training_data}}
+  --reg_rate ${{inputs.reg_rate}}
+
+# Input data and hyperparameters
 inputs:
   training_data: 
     type: uri_folder 
-    path: 
-  reg_rate: 0.01
+    path: azureml:diabetes-dev-folder@latest
+  reg_rate: 0.1
+
+# Use prebuilt environment
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
-compute: 
-experiment_name: 
-description: 
+
+# Compute and experiment setup
+compute: azureml:diabetescompute
+experiment_name: diabetes-training
+description: Train a logistic regression model on diabetes data
