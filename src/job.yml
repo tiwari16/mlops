@@ -20,6 +20,6 @@ inputs:
 environment: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
 
 # Compute and experiment setup
-compute: azureml:diabetescompute
+compute: azureml:diabetes-cluster
 experiment_name: diabetes-training
 description: Train a logistic regression model on diabetes data

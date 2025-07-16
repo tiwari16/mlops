@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+*.env
+*.json
+az-credentials.json
+# Azure ML specific files
+azureml-logs/
+azureml-logs/azureml.log
+azureml-logs/azureml-logs.jsonl 
+# .gitignore
+*.json
+*.sh
+azure_config.sh
+sp.json
+
