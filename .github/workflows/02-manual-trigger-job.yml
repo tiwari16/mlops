@@ -1,6 +1,6 @@
 name: Manually trigger an Azure Machine Learning job
 
-# This allows manual triggering via the GitHub Actions UI
+# This enables manual trigger from GitHub UI
 on:
   workflow_dispatch:
 
@@ -9,29 +9,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # ✅ Step 1: Check out code from your GitHub repo
+    # ✅ Step 1: Check out code from your GitHub repository
     - name: ⬇️ Check out repo
       uses: actions/checkout@v3
 
-    # ✅ Step 2: Ensure the Azure ML extension is installed
+    # ✅ Step 2: Install the Azure ML CLI extension
     - name: 🧩 Install Azure ML CLI extension
       run: az extension add -n ml -y
 
-    # ✅ Step 3: Login using GitHub secret (service principal JSON)
+    # ✅ Step 3: Log in to Azure using the service principal stored in secrets
     - name: 🔐 Azure login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # ✅ Step 4: Set Azure defaults for workspace context
+    # ✅ Step 4: Set default Azure subscription, resource group, and workspace
     - name: 🛠️ Set Azure defaults
       run: |
         az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         az configure --defaults group=diabetes-dev-rg workspace=diabetes-ws
 
-    # ✅ Step 5: Trigger the Azure ML job using job YAML
+    # ✅ Step 5: Submit the Azure Machine Learning job defined in the YAML file
     - name: 🚀 Submit AML job
       run: |
-        az ml job create --file src/job.yml
-        --resource-group diabetes-dev-rg \
-        --workspace-name diabetes-ws            
+        az ml job create \
+          --file src/job.yml \
+          --resource-group diabetes-dev-rg \
+          --workspace-name diabetes-ws
+        echo "✅ Job submitted successfully." 
