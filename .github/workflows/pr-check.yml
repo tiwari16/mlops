@@ -23,5 +23,5 @@ jobs:
       # You’ll replace or extend this in later challenges
       - name: Placeholder
         run: |
-          echo "Will add code checks here in next challenge"
+          echo "Will add code checks here in next challenge for you."
       # 📜 Step 3: Print a message indicating the workflow is complete
